@@ -8,3 +8,7 @@ dist-ssr
 .vercel
 .DS_Store
 *.log
+# gerados no build
+public/sitemap.xml
+public/*.png
+public/favicon.ico

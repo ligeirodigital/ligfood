@@ -346,7 +346,7 @@ export default function Landing() {
         >
           <div className="flex items-center gap-6">
             <img
-              src="/logo-ligfood-on-orange.png"
+              src="/logo-ligfood-on-orange.svg"
               alt=""
               aria-hidden
               loading="lazy"

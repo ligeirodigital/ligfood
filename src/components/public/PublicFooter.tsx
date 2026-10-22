@@ -10,7 +10,7 @@ export default function PublicFooter() {
       <div className="max-w-7xl mx-auto px-6 py-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10">
         <div className="space-y-4 lg:col-span-2">
           <img
-            src="/logo-ligfood-dark.png"
+            src="/logo-ligfood-dark.svg"
             alt="LigFood"
             loading="lazy"
             width={240}

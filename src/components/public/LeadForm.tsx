@@ -36,8 +36,12 @@ export default function LeadForm() {
       setError(parsed.error.issues[0].message);
       return;
     }
+    if (!supabase) {
+      setError("Não foi possível enviar agora. Fale com a gente pelo WhatsApp (85) 99275-3337.");
+      return;
+    }
     setLoading(true);
-    const { error: err } = await supabase.from("lead_submissions" as never).insert(parsed.data as never);
+    const { error: err } = await supabase.from("lead_submissions").insert(parsed.data);
     setLoading(false);
     if (err) {
       setError("Não foi possível enviar. Tente novamente.");

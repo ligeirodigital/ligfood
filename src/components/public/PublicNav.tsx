@@ -12,7 +12,7 @@ export default function PublicNav() {
       <div className="max-w-7xl mx-auto px-4 md:px-6 h-[72px] md:h-24 flex items-center justify-between gap-2">
         <Link to="/" aria-label="LigFood — página inicial" className="flex items-center gap-2 shrink-0">
           <img
-            src="/logo-ligfood-dark.png"
+            src="/logo-ligfood-dark.svg"
             alt="LigFood — plataforma de delivery no WhatsApp"
             className="h-14 md:h-[4.5rem] w-auto"
             width={240}

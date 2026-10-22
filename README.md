@@ -28,4 +28,4 @@ npm run dev
 
 ## Deploy
 
-Cada push na branch `main` gera deploy automático na Vercel. As variáveis `VITE_SUPABASE_URL` e `VITE_SUPABASE_PUBLISHABLE_KEY` ficam configuradas no projeto da Vercel.
+Cada push na branch `main` gera deploy automático na Vercel. Não é preciso configurar variáveis: o projeto já usa a chave pública do Supabase por padrão (pode ser sobrescrita com `VITE_SUPABASE_URL` e `VITE_SUPABASE_PUBLISHABLE_KEY`).
