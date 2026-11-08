@@ -1,25 +1,10 @@
 import { useState } from "react";
-import { z } from "zod";
 import { motion } from "framer-motion";
 import { Check, MessageCircle } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-
-const schema = z.object({
-  name: z.string().trim().min(2, "Informe seu nome").max(100, "Nome muito longo"),
-  whatsapp: z
-    .string()
-    .transform((v) => v.replace(/\D/g, ""))
-    .refine((v) => v.length >= 10 && v.length <= 13, "WhatsApp inválido (com DDD)"),
-});
-
-function maskPhone(v: string) {
-  const d = v.replace(/\D/g, "").slice(0, 11);
-  if (d.length <= 2) return d;
-  if (d.length <= 7) return `(${d.slice(0, 2)}) ${d.slice(2)}`;
-  return `(${d.slice(0, 2)}) ${d.slice(2, 7)}-${d.slice(7)}`;
-}
+import { maskPhone, saveLead, whatsappUrl } from "@/lib/leads";
+import { trackEvent } from "@/lib/tracking";
 
 export default function LeadForm() {
   const [name, setName] = useState("");
@@ -31,27 +16,23 @@ export default function LeadForm() {
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
     setError(null);
-    const parsed = schema.safeParse({ name, whatsapp });
-    if (!parsed.success) {
-      setError(parsed.error.issues[0].message);
-      return;
-    }
-    if (!supabase) {
-      setError("Não foi possível enviar agora. Fale com a gente pelo WhatsApp (85) 99275-3337.");
-      return;
-    }
     setLoading(true);
-    const { error: err } = await supabase.from("lead_submissions").insert(parsed.data);
+    const err = await saveLead({ name, whatsapp }, "demo");
     setLoading(false);
     if (err) {
-      setError("Não foi possível enviar. Tente novamente.");
+      setError(err);
       return;
     }
     setDone(true);
   }
 
+  const firstName = name.trim().split(/\s+/)[0];
+  const followUp = whatsappUrl(
+    `Olá! Sou ${name.trim()} e acabei de pedir uma demonstração do LigFood pelo site.`,
+  );
+
   return (
-    <section className="max-w-5xl mx-auto px-6 pb-24">
+    <section id="demonstracao" className="max-w-5xl mx-auto px-6 pb-24 scroll-mt-28">
       <motion.div
         initial={{ opacity: 0, y: 24 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -67,16 +48,40 @@ export default function LeadForm() {
           </p>
         </div>
         {done ? (
-          <div role="status" className="flex items-center gap-3 rounded-2xl border border-success/40 bg-success/10 p-5 font-semibold">
-            <Check className="size-5 text-success shrink-0" /> Recebemos seu contato! Em breve falaremos com você.
+          <div role="status" className="space-y-4 rounded-2xl border border-success/40 bg-success/10 p-5">
+            <p className="flex items-start gap-3 font-semibold">
+              <Check className="mt-0.5 size-5 shrink-0 text-success" />
+              Pronto{firstName ? `, ${firstName}` : ""}! Recebemos seu contato.
+            </p>
+            <p className="text-sm text-muted-foreground">
+              Quer adiantar? Mande um oi agora e já começamos sua demonstração.
+            </p>
+            <Button asChild size="lg" className="w-full h-12 rounded-2xl font-black bg-[#25D366] text-white hover:bg-[#25D366]/90">
+              <a
+                href={followUp}
+                target="_blank"
+                rel="noopener"
+                onClick={() => trackEvent("whatsapp_click", { origin: "pos_demo" })}
+              >
+                <MessageCircle className="mr-2 size-4" /> Falar agora no WhatsApp
+              </a>
+            </Button>
           </div>
         ) : (
           <form onSubmit={onSubmit} className="space-y-3" noValidate>
-            <Input aria-label="Seu nome" placeholder="Seu nome" value={name} maxLength={100} onChange={(e) => setName(e.target.value)} />
+            <Input
+              aria-label="Seu nome"
+              placeholder="Seu nome"
+              autoComplete="name"
+              value={name}
+              maxLength={100}
+              onChange={(e) => setName(e.target.value)}
+            />
             <Input
               aria-label="WhatsApp com DDD"
-              placeholder="(11) 99999-9999"
+              placeholder="(85) 99999-9999"
               inputMode="tel"
+              autoComplete="tel-national"
               value={whatsapp}
               onChange={(e) => setWhatsapp(maskPhone(e.target.value))}
             />

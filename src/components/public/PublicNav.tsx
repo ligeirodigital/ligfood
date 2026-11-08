@@ -1,5 +1,7 @@
 import { Link, NavLink } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { LOGIN_URL } from "@/lib/leads";
+import { TrialLink } from "./LeadCapture";
 
 const links = [
   { to: "/", label: "Home" },
@@ -38,10 +40,10 @@ export default function PublicNav() {
         </nav>
         <div className="flex items-center gap-2">
           <Button asChild variant="ghost" size="sm" className="hidden sm:inline-flex">
-            <a href="https://app.gestorpedido.com/ligfood/login">Entrar</a>
+            <a href={LOGIN_URL}>Entrar</a>
           </Button>
-          <Button asChild size="sm" className="rounded-full">
-            <a href="https://app.gestorpedido.com/ligfood/register">Testar grátis</a>
+          <Button asChild size="sm" className="rounded-full hidden md:inline-flex">
+            <TrialLink origin="topo">Testar grátis</TrialLink>
           </Button>
         </div>
       </div>

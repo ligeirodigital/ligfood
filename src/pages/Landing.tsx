@@ -35,6 +35,7 @@ import CardapioMockup from "@/components/mockups/CardapioMockup";
 import WhatsappMockup from "@/components/mockups/WhatsappMockup";
 import DashboardMockup from "@/components/mockups/DashboardMockup";
 import { SITE_URL } from "@/lib/site";
+import { TrialLink } from "@/components/public/LeadCapture";
 
 const showcase = [
   {
@@ -74,7 +75,6 @@ const showcase = [
   },
 ];
 
-const REGISTER_URL = "https://app.gestorpedido.com/ligfood/register";
 
 const fadeUp = {
   initial: { opacity: 0, y: 24 },
@@ -187,7 +187,7 @@ export default function Landing() {
             </p>
             <div className="mt-10 flex flex-col sm:flex-row gap-3">
               <Button asChild size="lg" className="h-14 rounded-2xl px-8 font-black text-sm uppercase tracking-widest shadow-xl shadow-primary/30 hover:shadow-primary/50 hover:-translate-y-0.5 transition-all">
-                <a href={REGISTER_URL}>Testar gratuitamente <ArrowRight className="ml-2 size-4" /></a>
+                <TrialLink origin="hero">Testar gratuitamente <ArrowRight className="ml-2 size-4" /></TrialLink>
               </Button>
               <Button asChild size="lg" variant="secondary" className="h-14 rounded-2xl px-8 font-black text-sm uppercase tracking-widest border border-border/50">
                 <Link to="/planos">Ver planos</Link>
@@ -360,7 +360,7 @@ export default function Landing() {
             </div>
           </div>
           <Button asChild size="lg" className="h-13 rounded-2xl px-8 font-black text-sm uppercase tracking-widest shrink-0 bg-[hsl(var(--brand-black))] text-white hover:bg-[hsl(var(--brand-black))]/90">
-            <a href={REGISTER_URL}>Começar grátis <ArrowRight className="ml-2 size-4" /></a>
+            <TrialLink origin="faixa_laranja">Começar grátis <ArrowRight className="ml-2 size-4" /></TrialLink>
           </Button>
         </motion.div>
       </section>
@@ -459,7 +459,7 @@ export default function Landing() {
             </p>
             <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
               <Button asChild size="lg" className="h-14 rounded-2xl px-10 font-black text-sm uppercase tracking-widest shadow-xl shadow-primary/40">
-                <a href={REGISTER_URL}>Começar agora <ArrowRight className="ml-2 size-4" /></a>
+                <TrialLink origin="cta_final">Começar agora <ArrowRight className="ml-2 size-4" /></TrialLink>
               </Button>
               <Button asChild size="lg" variant="secondary" className="h-14 rounded-2xl px-10 font-black text-sm uppercase tracking-widest border border-border/50">
                 <Link to="/contato">Falar com especialista</Link>

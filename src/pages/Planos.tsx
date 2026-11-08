@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import PublicLayout from "@/components/public/PublicLayout";
 import Seo from "@/components/Seo";
 import { useState } from "react";
+import { TrialLink } from "@/components/public/LeadCapture";
 
 const plans = [
   {
@@ -116,7 +117,7 @@ export default function Planos() {
               ))}
             </ul>
             <Button asChild size="lg" className={`mt-8 rounded-2xl h-12 font-black ${!p.highlight && "bg-secondary text-foreground hover:bg-secondary/80"}`}>
-              <a href="https://app.gestorpedido.com/ligfood/register">{p.cta} <ArrowRight className="ml-2 size-4" /></a>
+              <TrialLink origin={`plano_${p.name.toLowerCase()}`}>{p.cta} <ArrowRight className="ml-2 size-4" /></TrialLink>
             </Button>
           </div>
         ))}

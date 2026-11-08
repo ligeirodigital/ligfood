@@ -7,6 +7,8 @@ import { Label } from "@/components/ui/label";
 import { MessageCircle, AtSign, Mail } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
+import { WHATSAPP_DISPLAY, whatsappUrl } from "@/lib/leads";
+import { trackEvent } from "@/lib/tracking";
 
 export default function Contato() {
   const [loading, setLoading] = useState(false);
@@ -17,8 +19,8 @@ export default function Contato() {
     const nome = form.get("nome");
     const msg = form.get("mensagem");
     setLoading(true);
-    const url = `https://wa.me/5585992753337?text=${encodeURIComponent(`Olá, sou ${nome}. ${msg}`)}`;
-    window.open(url, "_blank");
+    trackEvent("whatsapp_click", { origin: "contato_form" });
+    window.open(whatsappUrl(`Olá, sou ${nome}. ${msg}`), "_blank");
     setLoading(false);
     toast.success("Mensagem preparada no WhatsApp!");
   };
@@ -41,11 +43,11 @@ export default function Contato() {
           </p>
 
           <div className="mt-10 space-y-4">
-            <a href="https://wa.me/5585992753337" className="flex items-center gap-3 rounded-2xl border border-border/50 bg-card/40 p-4 hover:border-success/40">
+            <a href={whatsappUrl()} target="_blank" rel="noopener" onClick={() => trackEvent("whatsapp_click", { origin: "contato" })} className="flex items-center gap-3 rounded-2xl border border-border/50 bg-card/40 p-4 hover:border-success/40">
               <div className="size-10 rounded-xl bg-success/10 text-success flex items-center justify-center"><MessageCircle className="size-5" /></div>
               <div>
                 <div className="text-xs uppercase tracking-widest text-muted-foreground">WhatsApp</div>
-                <div className="font-bold">(85) 99275-3337</div>
+                <div className="font-bold">{WHATSAPP_DISPLAY}</div>
               </div>
             </a>
             <a href="https://instagram.com/ligeirodigital" className="flex items-center gap-3 rounded-2xl border border-border/50 bg-card/40 p-4 hover:border-primary/40">

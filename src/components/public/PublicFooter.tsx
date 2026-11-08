@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
 import { AtSign, MessageCircle, MapPin, Mail } from "lucide-react";
-
-const REGISTER_URL = "https://app.gestorpedido.com/ligfood/register";
-const LOGIN_URL = "https://app.gestorpedido.com/ligfood/login";
+import { LOGIN_URL, WHATSAPP_DISPLAY, whatsappUrl } from "@/lib/leads";
+import { trackEvent } from "@/lib/tracking";
+import { TrialLink } from "./LeadCapture";
 
 export default function PublicFooter() {
   return (
@@ -24,7 +24,7 @@ export default function PublicFooter() {
           <ul className="space-y-2 text-sm text-muted-foreground pt-2">
             <li className="flex items-center gap-2">
               <MessageCircle className="size-4 text-success shrink-0" />
-              <a href="https://wa.me/5585992753337" className="hover:text-primary">(85) 99275-3337</a>
+              <a href={whatsappUrl()} target="_blank" rel="noopener" onClick={() => trackEvent("whatsapp_click", { origin: "rodape" })} className="hover:text-primary">{WHATSAPP_DISPLAY}</a>
             </li>
             <li className="flex items-center gap-2">
               <Mail className="size-4 text-primary shrink-0" />
@@ -46,7 +46,7 @@ export default function PublicFooter() {
           <ul className="space-y-2 text-sm text-muted-foreground">
             <li><Link to="/" className="hover:text-primary">Home</Link></li>
             <li><Link to="/planos" className="hover:text-primary">Planos e preços</Link></li>
-            <li><a href={REGISTER_URL} className="hover:text-primary">Testar gratuitamente</a></li>
+            <li><TrialLink origin="rodape" className="hover:text-primary">Testar gratuitamente</TrialLink></li>
             <li><a href={LOGIN_URL} className="hover:text-primary">Entrar no sistema</a></li>
           </ul>
         </div>
@@ -56,7 +56,7 @@ export default function PublicFooter() {
           <ul className="space-y-2 text-sm text-muted-foreground">
             <li><Link to="/documentacao" className="hover:text-primary">Documentação</Link></li>
             <li><Link to="/contato" className="hover:text-primary">Contato e suporte</Link></li>
-            <li><a href="https://wa.me/5585992753337" className="hover:text-primary">Suporte no WhatsApp</a></li>
+            <li><a href={whatsappUrl()} target="_blank" rel="noopener" onClick={() => trackEvent("whatsapp_click", { origin: "rodape" })} className="hover:text-primary">Suporte no WhatsApp</a></li>
           </ul>
         </div>
 
